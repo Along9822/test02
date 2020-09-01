@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var id =window.location.href.split("=")[1];
+            show(id);
+        });
+        function show(id){
+            $.ajax({
+                url:'http://localhost:8080/select?id='+id,
+                success:function(result){
+                    //result = code data
+                    var rel=result.data[0];
+                    if(result.code == 200)
+                    {
+                        //serach failed
+                        return;
+                    }
+                    var htmlStr="<form action='/update'>"
+                    htmlStr+="<input type='test' name='id' value="+rel.id+">"+
+                        "<input type='test' name='name' value="+rel.name+">"+
+                        "<input type='test' name='age' value="+rel.age+">"+
+                        "<input type='submit' value='确定'>";
+                    htmlStr+="</form>";
+                    $("#show").html(htmlStr);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="show">
+</div>
+</body>
+</html>
